@@ -19,4 +19,4 @@
 #    - openstack
 ---
 dependencies:
-  - { role: 'umd_role', when: distribution == "cmd" }
+  - { role: 'umd_role', when: {{ distribution }} == "cmd" }
