@@ -27,7 +27,6 @@
     src: provider_script.j2
     dest: "{{ cloud_info_provider_bdii_dir }}/cloud-info-provider"
     mode: 0755
-    notify: restart bdii
 
 - name: Start the bdii service
   service: name=bdii state=started enabled=yes
