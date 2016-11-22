@@ -1,4 +1,3 @@
----
 #galaxy_info:
 #  author: Baptiste Grenier <baptiste.grenier@egi.eu>
 #  owner: indigo-dc
@@ -18,6 +17,6 @@
 #    - indigo
 #    - opennebula
 #    - openstack
-
+---
 dependencies:
-  - { role: 'umd_role', when: distribution == 'cmd' }
+  - { role: 'umd_role', when: distribution == "cmd" }
