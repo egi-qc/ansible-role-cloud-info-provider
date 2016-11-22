@@ -19,4 +19,4 @@ galaxy_info:
     - openstack
 
 dependencies:
-  - { role: 'umd_role', verification_repofile: 'http://admin-repo.egi.eu/sw/unverified/cmd-os-1.infoprovider.bdii-infoprovider.centos7.x86_64/0/6/12/repofiles/INFOPROVIDER.bdii-infoprovider.centos7.x86_64.repo', when: distribution == 'cmd' }
+  - { role: 'umd_role', when: distribution == 'cmd' }
