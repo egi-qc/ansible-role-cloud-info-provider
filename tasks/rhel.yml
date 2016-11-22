@@ -36,3 +36,8 @@
     name: "{{ package }}"
     state: latest
     update_cache: yes
+
+- name: Install bdii
+  yum:
+    name: bdii
+    state: latest

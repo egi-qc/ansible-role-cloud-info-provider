@@ -1,0 +1,8 @@
+#!/bin/sh
+
+cloud-info-provider-service --yaml {{ cloud_info_provider_conf_dir }}/{{ cloud_info_provider_main_conf_file }} \
+                            --middleware {{ cloud_info_provider_middleware }} \
+                            --os-username {{ cloud_info_provider_os_username }} \
+                            --os-password {{ cloud_info_provider_os_password }} \
+                            --os-tenant-name {{ cloud_info_provider_os_tenant-name }} \
+                            --os-auth_url {{ cloud_info_provider_os_auth_url }}

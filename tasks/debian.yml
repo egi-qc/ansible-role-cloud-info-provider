@@ -42,3 +42,9 @@
     name: "{{ package }}"
     state: latest
     update_cache: yes
+
+- name: Install bdii
+  apt:
+    name: bdii
+    state: latest
+    update_cache: yes
