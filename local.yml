@@ -5,3 +5,4 @@
     - ansible-role-cloud-info-provider
   vars:
     distribution: cmd
+    cloud_info_provider_middleware: openstack
