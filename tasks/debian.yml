@@ -4,10 +4,14 @@
     name: software-properties-common
     state: latest
   when: cloud_info_provider_middleware == 'openstack'
+  tags:
+      - indigo
 
 - name: Install OpenStack ppa
   command: "add-apt-repository -y cloud-archive:{{ cloud_info_provider_os_release }}"
   when: cloud_info_provider_middleware == 'openstack'
+  tags:
+      - indigo
 
 # XXX install before INDIGO repo as repo's version has broken dependencies
 - name: Install python-novaclient
@@ -16,12 +20,16 @@
     state: latest
     update_cache: yes
   when: cloud_info_provider_middleware == 'openstack'
+  tags:
+      - indigo
 
 - name: Install python-keystoneclient
   apt:
     name: python-keystoneclient
     state: latest
   when: cloud_info_provider_middleware == 'openstack'
+  tags:
+      - indigo
 
 - name: Install the INDIGO GPG key
   apt_key:
