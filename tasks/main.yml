@@ -27,9 +27,13 @@
     src: provider_script.j2
     dest: "{{ cloud_info_provider_bdii_dir }}/cloud-info-provider"
     mode: 0755
+  tags:
+      - cmd
 
 - name: Start the bdii service
   service: name=bdii state=started enabled=yes
+  tags:
+      - cmd
 
 - cron:
     name: 'Send cloud-info-provider data to CMDB'

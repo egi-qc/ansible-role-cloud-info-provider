@@ -13,23 +13,29 @@
   tags:
       - indigo
 
-#- name: Install OpenStack repositories
-#  yum:
-#    name: centos-release-openstack-{{ cloud_info_provider_os_release }}
-#    state: latest
-#  when: cloud_info_provider_middleware == 'openstack'
-#
-#- name: Install python-novaclient
-#  yum:
-#    name: python-novaclient
-#    state: latest
-#  when: cloud_info_provider_middleware == 'openstack'
-#
-#- name: Install python-keystoneclient
-#  yum:
-#    name: python-keystoneclient
-#    state: latest
-#  when: cloud_info_provider_middleware == 'openstack'
+- name: Install OpenStack repositories
+  yum:
+    name: centos-release-openstack-{{ cloud_info_provider_os_release }}
+    state: latest
+  when: cloud_info_provider_middleware == 'openstack'
+  tags:
+      - indigo
+
+- name: Install python-novaclient
+  yum:
+    name: python-novaclient
+    state: latest
+  when: cloud_info_provider_middleware == 'openstack'
+  tags:
+      - indigo
+
+- name: Install python-keystoneclient
+  yum:
+    name: python-keystoneclient
+    state: latest
+  when: cloud_info_provider_middleware == 'openstack'
+  tags:
+      - indigo
 
 - name: Install cloud-info-provider
   yum:

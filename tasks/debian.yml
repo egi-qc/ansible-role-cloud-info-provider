@@ -45,6 +45,20 @@
   tags:
       - indigo
 
+- name: Install the EGI GPG key
+  apt_key:
+    state: present
+    url: http://repository.egi.eu/sw/production/umd/UMD-DEB-PGP-KEY
+  tags:
+    - cmd
+
+- name: Install the admin EGI GPG key
+  apt_key:
+    state: present
+    url: https://admin-repo.egi.eu/sw/production/umd/UMD-DEB-PGP-KEY
+  tags:
+    - cmd
+
 - name: Install cloud-info-provider
   apt:
     name: "{{ package }}"
