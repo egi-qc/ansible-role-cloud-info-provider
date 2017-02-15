@@ -19,4 +19,4 @@ galaxy_info:
     - opennebula
     - openstack
 dependencies:
-  - { role: 'umd_role', when: distribution == "cmd" }
+  - { role: 'cmd', when: distribution == "cmd" }
