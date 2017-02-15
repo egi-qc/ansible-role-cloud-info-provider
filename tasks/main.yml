@@ -9,47 +9,47 @@
 - debug:
     msg: ">>>>>>>>>>>>>>>>>> Distribution: {{ distribution }}"
 
-- name: OS specific variables
-  include_vars: "{{ distribution }}_{{ ansible_distribution }}{{ ansible_distribution_major_version }}.yml"
-
-- name: Load debian-specific configuration
-  include: debian.yml
-  when: ansible_os_family == 'Debian'
-
-- name: Load RHEL-specific configuration
-  include: rhel.yml
-  when: ansible_os_family == 'RedHat'
-
-- name: Configure static/default provider
-  template:
-    src: main_conf.j2
-    dest: "{{ cloud_info_provider_conf_dir }}/{{ cloud_info_provider_main_conf_file }}"
-
-- name: Set provider script
-  template:
-    src: provider_script.j2
-    dest: "{{ cloud_info_provider_bdii_dir }}/cloud-info-provider"
-    mode: 0755
-  tags:
-      - cmd
-
-- name: Start the bdii service
-  service: name=bdii state=started enabled=yes
-  tags:
-      - cmd
-
-- cron:
-    name: 'Send cloud-info-provider data to CMDB'
-    special_time: hourly
-    job: cloud-info-provider-indigo-service --yaml-file {{ cloud_info_provider_conf_dir }}/{{ cloud_info_provider_main_conf_file }} --middleware {{ cloud_info_provider_middleware }} --os-username {{ cloud_info_provider_os_username }} --os-tenant-name {{ cloud_info_provider_os_tenant_name }} --os-password {{ cloud_info_provider_os_password }} --os-auth-url {{ cloud_info_provider_os_auth_url }} 2>/dev/null | send-to-cmdb --cmdb-read-endpoint {{ cloud_info_provider_cmdb_read_url }} --cmdb-write-endpoint {{ cloud_info_provider_cmdb_write_url }} --cmdb-user {{ cloud_info_provider_cmdb_user }} --cmdb-password {{ cloud_info_provider_cmdb_password }} --sitename {{ cloud_info_provider_sitename }}"
-  when: "{{ cloud_info_provider_setup_cron | default(false) }} and cloud_info_provider_middleware == 'openstack'"
-  tags:
-    - indigo
-
-- cron:
-    name: 'Send cloud-info-provider data to CMDB'
-    special_time: hourly
-    job: "cloud-info-provider-indigo-service --yaml-file {{ cloud_info_provider_conf_dir }}/{{ cloud_info_provider_main_conf_file }} --middleware {{ cloud_info_provider_middleware }} --on-auth {{ cloud_info_provider_on_auth }} --on-rpcxml-endpoint {{ cloud_info_provider_on_xmlrpc_url }} 2>/dev/null | send-to-cmdb --cmdb-read-endpoint {{ cloud_info_provider_cmdb_read_url }} --cmdb-write-endpoint {{ cloud_info_provider_cmdb_write_url }} --cmdb-user {{ cloud_info_provider_cmdb_user }} --cmdb-password {{ cloud_info_provider_cmdb_password }} --sitename {{ cloud_info_provider_sitename }}"
-  when: "{{ cloud_info_provider_setup_cron | default(false) }} and cloud_info_provider_middleware == 'indigoon'"
-  tags:
-    - indigo
+#- name: OS specific variables
+#  include_vars: "{{ distribution }}_{{ ansible_distribution }}{{ ansible_distribution_major_version }}.yml"
+#
+#- name: Load debian-specific configuration
+#  include: debian.yml
+#  when: ansible_os_family == 'Debian'
+#
+#- name: Load RHEL-specific configuration
+#  include: rhel.yml
+#  when: ansible_os_family == 'RedHat'
+#
+#- name: Configure static/default provider
+#  template:
+#    src: main_conf.j2
+#    dest: "{{ cloud_info_provider_conf_dir }}/{{ cloud_info_provider_main_conf_file }}"
+#
+#- name: Set provider script
+#  template:
+#    src: provider_script.j2
+#    dest: "{{ cloud_info_provider_bdii_dir }}/cloud-info-provider"
+#    mode: 0755
+#  tags:
+#      - cmd
+#
+#- name: Start the bdii service
+#  service: name=bdii state=started enabled=yes
+#  tags:
+#      - cmd
+#
+#- cron:
+#    name: 'Send cloud-info-provider data to CMDB'
+#    special_time: hourly
+#    job: cloud-info-provider-indigo-service --yaml-file {{ cloud_info_provider_conf_dir }}/{{ cloud_info_provider_main_conf_file }} --middleware {{ cloud_info_provider_middleware }} --os-username {{ cloud_info_provider_os_username }} --os-tenant-name {{ cloud_info_provider_os_tenant_name }} --os-password {{ cloud_info_provider_os_password }} --os-auth-url {{ cloud_info_provider_os_auth_url }} 2>/dev/null | send-to-cmdb --cmdb-read-endpoint {{ cloud_info_provider_cmdb_read_url }} --cmdb-write-endpoint {{ cloud_info_provider_cmdb_write_url }} --cmdb-user {{ cloud_info_provider_cmdb_user }} --cmdb-password {{ cloud_info_provider_cmdb_password }} --sitename {{ cloud_info_provider_sitename }}"
+#  when: "{{ cloud_info_provider_setup_cron | default(false) }} and cloud_info_provider_middleware == 'openstack'"
+#  tags:
+#    - indigo
+#
+#- cron:
+#    name: 'Send cloud-info-provider data to CMDB'
+#    special_time: hourly
+#    job: "cloud-info-provider-indigo-service --yaml-file {{ cloud_info_provider_conf_dir }}/{{ cloud_info_provider_main_conf_file }} --middleware {{ cloud_info_provider_middleware }} --on-auth {{ cloud_info_provider_on_auth }} --on-rpcxml-endpoint {{ cloud_info_provider_on_xmlrpc_url }} 2>/dev/null | send-to-cmdb --cmdb-read-endpoint {{ cloud_info_provider_cmdb_read_url }} --cmdb-write-endpoint {{ cloud_info_provider_cmdb_write_url }} --cmdb-user {{ cloud_info_provider_cmdb_user }} --cmdb-password {{ cloud_info_provider_cmdb_password }} --sitename {{ cloud_info_provider_sitename }}"
+#  when: "{{ cloud_info_provider_setup_cron | default(false) }} and cloud_info_provider_middleware == 'indigoon'"
+#  tags:
+#    - indigo
