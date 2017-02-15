@@ -6,6 +6,9 @@
 
 - include_vars: defaults/main.yml
 
+- debug:
+    msg: ">>>>>>>>>>>>>>>>>> Distribution: {{ distribution }}"
+
 - name: OS specific variables
   include_vars: "{{ distribution }}_{{ ansible_distribution }}{{ ansible_distribution_major_version }}.yml"
 
