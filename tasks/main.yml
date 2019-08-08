@@ -9,8 +9,8 @@
 - debug:
     msg: "Distribution detected: {{ distribution }}"
 
-- name: OS specific variables
-  include_vars: "{{ distribution }}_{{ ansible_distribution }}{{ ansible_distribution_major_version }}.yml"
+#- name: OS specific variables
+#  include_vars: "{{ distribution }}_{{ ansible_distribution }}{{ ansible_distribution_major_version }}.yml"
 
 - name: Load debian-specific configuration
   include: debian.yml
@@ -20,10 +20,47 @@
   include: rhel.yml
   when: ansible_os_family == 'RedHat'
 
+- name: Install cloud-info-provider
+  package:
+    name: "{{ package[(ansible_os_family | lower)] }}"
+    state: latest
+  tags:
+      - cmd
+
+- name: Install cloud-info-provider (indigo)
+  package:
+    name: "{{ package[(ansible_os_family | lower)] }}-indigo"
+    state: latest
+  tags:
+      - indigo
+ 
+- name: Install cloud-info-provider CMF package
+  package:
+    name: "{{ package_cmf[cloud_info_provider_middleware][(ansible_os_family | lower)] }}"
+    state: latest
+  tags:
+      - cmd
+ 
+- name: Install cloud-info-provider CMF package (indigo)
+  package:
+    name: "{{ package_cmf[cloud_info_provider_middleware][(ansible_os_family | lower)] }}-indigo"
+    state: latest
+  tags:
+      - indigo
+
+- name: Install bdii
+  package:
+    name: bdii
+    state: latest
+  tags:
+      - cmd
+
 - name: Configure static/default provider
   template:
     src: main_conf.j2
     dest: "{{ cloud_info_provider_conf_dir }}/{{ cloud_info_provider_main_conf_file }}"
+  tags:
+      - cmd
 
 - name: Set provider script
   template:

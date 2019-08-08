@@ -1,0 +1,16 @@
+package:
+    debian:
+        - python-cloud-info-provider
+    redhat:
+        - cloud-info-provider
+package_cmf:
+    openstack:
+        debian:
+            - python-cloud-info-provider-openstack
+        redhat:
+            - cloud-info-provider-openstack
+    opennebula:
+        debian:
+            - python-cloud-info-provider-opennebula
+        redhat:
+            - cloud-info-provider-opennebula

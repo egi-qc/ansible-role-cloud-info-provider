@@ -36,14 +36,3 @@
   when: cloud_info_provider_middleware == 'openstack'
   tags:
       - indigo
-
-- name: Install cloud-info-provider
-  yum:
-    name: "{{ package }}"
-    state: latest
-    update_cache: yes
-
-- name: Install bdii
-  yum:
-    name: bdii
-    state: latest
