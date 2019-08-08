@@ -77,6 +77,12 @@
   tags:
     - cmd
 
+- name: Test provider execution
+  script: "{{ cloud_info_provider_bdii_dir }}/cloud-info-provider"
+  check_mode: no
+  tags:
+      - cmd
+
 - name: Start the bdii service
   service: name=bdii state=started enabled=yes
   tags:
