@@ -70,10 +70,17 @@
   tags:
       - cmd
 
+- name: Hack to install ca-policy-egi-core (MUST be done with ansible-role-cmd)
+  package:
+    name: ca-policy-egi-core
+    state: latest
+  tags:
+    - cmd
+
 - name: Start the bdii service
   service: name=bdii state=started enabled=yes
   tags:
-      - cmd
+    - cmd
 
 - cron:
     name: 'Send cloud-info-provider data to CMDB'
