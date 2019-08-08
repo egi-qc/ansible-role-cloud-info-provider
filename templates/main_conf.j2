@@ -23,6 +23,18 @@ compute:
         - cloud.managementSystem
         - cloud.vm.uploadImage
 
+    shares:
+        # Name of the VO
+        ops:
+            # Authentication for the VO into OpenStack
+            auth:
+                # the project id in OpenStack
+                project_id: {{ cloud_info_provider_os_project_id }}
+            # Default network type: none, public, public_only, private, private_only
+            default_network_type: public
+            # Public Network name
+            public_network_name: PUBLIC
+
     endpoints:
         # Default values for the endpoints. We will
         # produce entries for two kind of endpoints if they
