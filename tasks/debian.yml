@@ -44,3 +44,23 @@
     deb: http://jenkins.indigo-datacloud.eu/repository/indigo/1/ubuntu/dists/trusty/main/binary-amd64/indigodc-release_1.0.0-1_amd64.deb
   tags:
       - indigo
+
+- name: Trust IGTF CAs (find *.pem)
+  find:
+    paths: /etc/grid-security/certificates
+    recurse: no
+    file_type: file
+    use_regex: yes
+    patterns: 
+      - '.+\.pem$'
+  register: find
+
+- name: Trust IGTF CAs (create symlinks)
+  file:
+    state: link
+    src: "{{ item.path }}"
+    dest: "/usr/local/share/ca-certificates/{{ item.path | basename }}"
+  with_items: "{{ find.files }}"
+
+- name: Update trusted CAs
+  shell: update-ca-certificates

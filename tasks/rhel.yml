@@ -36,3 +36,23 @@
   when: cloud_info_provider_middleware == 'openstack'
   tags:
       - indigo
+
+- name: Trust IGTF CAs (find *.pem)
+  find:
+    paths: /etc/grid-security/certificates
+    recurse: no
+    file_type: file
+    use_regex: yes
+    patterns: 
+      - '.+\.pem$'
+  register: find
+
+- name: Trust IGTF CAs (create symlinks)
+  file:
+    state: link
+    src: "{{ item.path }}"
+    dest: "/etc/pki/ca-trust/source/anchors/{{ item.path | basename }}"
+  with_items: "{{ find.files }}"
+
+- name: Update trusted CAs
+  shell: update-ca-trust extract
