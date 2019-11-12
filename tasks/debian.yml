@@ -58,8 +58,9 @@
 - name: Trust IGTF CAs (create symlinks)
   file:
     state: link
+    force: yes
     src: "{{ item.path }}"
-    dest: "/usr/local/share/ca-certificates/{{ item.path | basename }}"
+    dest: "/usr/local/share/ca-certificates/{{ (item.path | basename | splitext)[0] }}.crt"
   with_items: "{{ find.files }}"
 
 - name: Update trusted CAs
